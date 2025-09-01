@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Previewer - Browser Tools Hub</title>
+    <link rel="stylesheet" href="markdown-preview.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-link">
+            <i data-lucide="arrow-left"></i>
+            Back to Tools
+        </a>
+        
+        <div class="tool-header">
+            <h1>Markdown Previewer</h1>
+            <p>Preview Markdown text as HTML in real-time with live editing.</p>
+        </div>
+        
+        <div class="tool-content">
+            <div class="editor-layout">
+                <div class="editor-pane">
+                    <textarea id="markdownInput" class="form-textarea" placeholder="# Hello, Markdown!"></textarea>
+                </div>
+                <div id="previewPane" class="preview-pane"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+    <script src="markdown-preview.js"></script>
+</body>
+</html>
+

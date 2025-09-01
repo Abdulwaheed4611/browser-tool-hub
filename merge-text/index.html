@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge Text Files - Browser Tools Hub</title>
+    <link rel="stylesheet" href="merge-text.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-link">
+            <i data-lucide="arrow-left"></i>
+            Back to Tools
+        </a>
+        
+        <div class="tool-header">
+            <h1>Merge Text Files</h1>
+            <p>Combine multiple text files into one. Perfect for merging logs, documents, or data files.</p>
+        </div>
+        
+        <div class="tool-content">
+            <div class="form-group">
+                <label for="textFilesInput" class="form-label">Select Text Files</label>
+                <div class="file-upload" id="fileUploadArea">
+                    <input type="file" id="textFilesInput" multiple accept=".txt, .csv, .log, .md, .json">
+                    <div class="upload-icon">
+                        <i data-lucide="merge"></i>
+                    </div>
+                    <div class="upload-text">Click to upload or drag and drop</div>
+                    <div class="upload-subtext">.txt, .csv, .log, .md, .json</div>
+                </div>
+            </div>
+
+            <div id="fileListContainer" class="hidden">
+                <h3 class="results-title">Selected Files</h3>
+                <ul id="fileList"></ul>
+            </div>
+
+            <div class="form-group">
+                <button id="mergeBtn" class="btn btn-primary" disabled>Merge Files</button>
+            </div>
+
+            <div id="resultsContainer" class="results-container hidden">
+                <h3 class="results-title">Merged Text</h3>
+                <textarea id="mergedText" class="form-textarea" rows="10" readonly></textarea>
+                <a id="downloadLink" class="btn btn-success hidden" download="merged.txt">Download Merged File</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="merge-text.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/fileValidator.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+    <script src="merge-text.js"></script>
+</body>
+</html>
+

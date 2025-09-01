@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Trimmer - Browser Tools Hub</title>
+    <link rel="stylesheet" href="audio-trimmer.css">
+    <link rel="stylesheet" href="../global.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
+</head>
+<body>
+    <div class="tool-page">
+        <a href="../index.html" class="back-link">
+            <i data-lucide="arrow-left"></i>
+            Back to Tools
+        </a>
+        
+        <div class="tool-header">
+            <h1>Audio Trimmer</h1>
+            <p>Trim audio files to your desired length, apply effects, and export in multiple formats.</p>
+            <div class="tool-features">
+                <div class="feature">
+                    <i data-lucide="scissors"></i>
+                    <span>Trim Audio</span>
+                </div>
+                <div class="feature">
+                    <i data-lucide="sliders"></i>
+                    <span>Apply Effects</span>
+                </div>
+                <div class="feature">
+                    <i data-lucide="download"></i>
+                    <span>Multiple Formats</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tool-content">
+            <div class="form-group">
+                <label for="audioFileInput" class="form-label">Select Audio File</label>
+                <div class="file-upload modern-upload" id="fileUploadArea">
+                    <input type="file" id="audioFileInput" accept="audio/*">
+                    <div class="upload-icon">
+                        <i data-lucide="music"></i>
+                    </div>
+                    <div class="upload-text">Click to upload or drag and drop</div>
+                    <div class="upload-subtext">Supports MP3, WAV, OGG (Max 50MB)</div>
+                    <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="progress-text">Loading audio file...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="audioInfo" class="audio-info hidden">
+                <div class="audio-info-item">
+                    <span class="audio-info-label">File Name:</span>
+                    <span id="audioFileName" class="audio-info-value"></span>
+                </div>
+                <div class="audio-info-item">
+                    <span class="audio-info-label">Duration:</span>
+                    <span id="audioDuration" class="audio-info-value"></span>
+                </div>
+                <div class="audio-info-item">
+                    <span class="audio-info-label">Sample Rate:</span>
+                    <span id="audioSampleRate" class="audio-info-value"></span>
+                </div>
+            </div>
+
+            <div id="waveformContainer" class="hidden">
+                <div class="waveform-header">
+                    <h3 class="section-title">Audio Waveform</h3>
+                    <div class="waveform-display-options">
+                        <label for="waveformDisplay" class="form-label-sm">Display Style:</label>
+                        <select id="waveformDisplay" class="form-select form-select-sm">
+                            <option value="standard">Standard</option>
+                            <option value="bars">Bars</option>
+                            <option value="line">Line</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="waveform-container">
+                    <div id="waveform"></div>
+                    <div id="waveform-timeline"></div>
+                </div>
+                <div class="waveform-controls">
+                    <div class="control-group">
+                        <button id="playPauseBtn" class="btn btn-primary">
+                            <i data-lucide="play"></i>
+                            <span>Play</span>
+                        </button>
+                        <button id="stopBtn" class="btn btn-secondary">
+                            <i data-lucide="square"></i>
+                            <span>Stop</span>
+                        </button>
+                    </div>
+                    <div class="control-group">
+                        <button id="zoomInBtn" class="btn btn-sm btn-secondary" title="Zoom In">
+                            <i data-lucide="zoom-in"></i>
+                        </button>
+                        <button id="zoomOutBtn" class="btn btn-sm btn-secondary" title="Zoom Out">
+                            <i data-lucide="zoom-out"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="trimControls" class="form-group hidden">
+                <div class="section-header">
+                    <h3 class="section-title">Trim Range</h3>
+                    <div class="section-help">
+                        <i data-lucide="help-circle"></i>
+                        <span class="tooltip">Drag the highlighted region in the waveform to select the part you want to keep</span>
+                    </div>
+                </div>
+                <div class="trim-controls-container">
+                    <div class="time-inputs">
+                        <div class="form-group">
+                            <label for="startTime" class="form-label">Start Time</label>
+                            <div class="time-input-container">
+                                <i data-lucide="skip-back"></i>
+                                <input type="text" id="startTime" class="form-input" value="0:00.000">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="endTime" class="form-label">End Time</label>
+                            <div class="time-input-container">
+                                <i data-lucide="skip-forward"></i>
+                                <input type="text" id="endTime" class="form-input" value="0:00.000">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="trim-actions">
+                        <button id="trimSelectionBtn" class="btn btn-primary">
+                            <i data-lucide="scissors"></i>
+                            <span>Trim to Selection</span>
+                        </button>
+                        <button id="resetSelectionBtn" class="btn btn-secondary">
+                            <i data-lucide="refresh-cw"></i>
+                            <span>Reset Selection</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="audioEffects" class="form-group hidden">
+                <div class="section-header">
+                    <h3 class="section-title">Audio Effects</h3>
+                    <button id="toggleEffectsBtn" class="btn btn-sm btn-secondary">
+                        <i data-lucide="sliders"></i>
+                        <span>Toggle Effects</span>
+                    </button>
+                </div>
+                <div id="effectsPanel" class="effects-panel">
+                    <div class="effects-grid">
+                        <div class="effect-card">
+                            <div class="effect-header">
+                                <i data-lucide="volume-2"></i>
+                                <label for="gainControl" class="form-label">Volume</label>
+                            </div>
+                            <div class="effect-slider-container">
+                                <input type="range" id="gainControl" min="0" max="2" step="0.1" value="1" class="effect-slider">
+                                <span id="gainValue" class="effect-value">1.0</span>
+                            </div>
+                        </div>
+                        <div class="effect-card">
+                            <div class="effect-header">
+                                <i data-lucide="fast-forward"></i>
+                                <label for="speedControl" class="form-label">Playback Speed</label>
+                            </div>
+                            <div class="effect-slider-container">
+                                <input type="range" id="speedControl" min="0.5" max="2" step="0.1" value="1" class="effect-slider">
+                                <span id="speedValue" class="effect-value">1.0x</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="effect-card">
+                        <div class="effect-header">
+                            <i data-lucide="filter"></i>
+                            <label class="form-label">Audio Filters</label>
+                        </div>
+                        <div class="filter-buttons">
+                            <button id="lowpassBtn" class="filter-btn" data-active="false">
+                                <i data-lucide="wave-sine"></i>
+                                <span>Low Pass</span>
+                            </button>
+                            <button id="highpassBtn" class="filter-btn" data-active="false">
+                                <i data-lucide="wave-triangle"></i>
+                                <span>High Pass</span>
+                            </button>
+                            <button id="reverbBtn" class="filter-btn" data-active="false">
+                                <i data-lucide="waves"></i>
+                                <span>Reverb</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group process-audio-container">
+                <button id="trimBtn" class="btn btn-primary btn-lg" disabled>
+                    <i data-lucide="cpu"></i>
+                    <span>Process Audio</span>
+                </button>
+                <div class="process-help">
+                    <i data-lucide="info"></i>
+                    <span>Click to apply all effects and trim settings</span>
+                </div>
+            </div>
+
+            <div id="resultsContainer" class="results-container hidden">
+                <div class="section-header">
+                    <h3 class="section-title">Processed Audio</h3>
+                    <div class="success-badge">
+                        <i data-lucide="check-circle"></i>
+                        <span>Ready for Export</span>
+                    </div>
+                </div>
+                <div id="audioPlayerContainer" class="result-player-container"></div>
+                <div class="export-container">
+                    <div class="export-options">
+                        <div class="export-option-card">
+                            <div class="export-option-header">
+                                <i data-lucide="file-type"></i>
+                                <label for="exportFormat" class="form-label">Export Format</label>
+                            </div>
+                            <select id="exportFormat" class="form-select">
+                                <option value="wav">WAV (Lossless)</option>
+                                <option value="mp3">MP3 (Compressed)</option>
+                                <option value="ogg">OGG (Compressed)</option>
+                            </select>
+                        </div>
+                        <div class="export-option-card" id="mp3QualityContainer">
+                            <div class="export-option-header">
+                                <i data-lucide="badge-check"></i>
+                                <label for="mp3Quality" class="form-label">MP3 Quality</label>
+                            </div>
+                            <select id="mp3Quality" class="form-select">
+                                <option value="128">128 kbps</option>
+                                <option value="192">192 kbps</option>
+                                <option value="256">256 kbps</option>
+                                <option value="320">320 kbps</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="export-buttons">
+                        <a id="downloadLink" class="btn btn-success btn-lg hidden" download="trimmed-audio.wav">
+                            <i data-lucide="download"></i>
+                            <span>Download Audio</span>
+                        </a>
+                        <button id="copyToClipboardBtn" class="btn btn-secondary hidden">
+                            <i data-lucide="clipboard-copy"></i>
+                            <span>Copy to Clipboard</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/fileValidator.js"></script>
+    <script src="../js/uiHelper.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+    <script src="audio-trimmer.js"></script>
+</body>
+</html>
+
