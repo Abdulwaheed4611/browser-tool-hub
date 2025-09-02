@@ -185,7 +185,7 @@ const allTools = [
         title: 'Timer & Stopwatch',
         description: 'Stopwatch, timer, and clock tool',
         icon: 'timer',
-        href: 'timer-stopwatch/index.html',
+        href: 'Timer-stopwatch/index.html',
         category: 'Utilities',
         searchKeywords: 'timer stopwatch clock'
     },
