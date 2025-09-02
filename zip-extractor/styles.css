@@ -143,7 +143,6 @@
     transition: all 0.2s ease;
     cursor: pointer;
     position: relative; /* Ensure full area is clickable */
-    width: 100%; /* Full width */
 }
 
 .file-upload:hover,
@@ -390,7 +389,7 @@
     }
 
     .file-upload {
-        padding: 1.5rem;
+        padding: 1.5rem; /* Adjusted for tablet */
     }
 
     .upload-icon {
@@ -494,15 +493,27 @@
     }
 
     .file-upload {
-        padding: 1rem;
+        padding: 1rem; /* Adjusted for smaller mobile screens */
+        min-height: 150px; /* Ensure sufficient height */
+        display: flex; /* Use flexbox for internal alignment */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .upload-icon {
+        width: 2rem; /* Smaller icon for small screens */
+        height: 2rem;
+        margin-bottom: 0.5rem;
     }
 
     .upload-text {
-        font-size: 0.9rem;
+        font-size: 0.85rem; /* Smaller font for main text */
+        margin-bottom: 0.25rem;
     }
 
     .upload-subtext {
-        font-size: 0.75rem;
+        font-size: 0.7rem; /* Smaller font for subtext */
     }
 
     .results-container {
