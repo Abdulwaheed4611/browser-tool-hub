@@ -47,6 +47,20 @@ const FileValidator = {
         const sizes = ['Bytes', 'KB', 'MB', 'GB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    },
+
+    /**
+     * Validates multiple files based on specified options.
+     *
+     * @param {File[]} files - An array of files to validate.
+     * @param {object} options - The validation options (same as validateFile).
+     * @returns {{file: File, isValid: boolean, error: string|null}[]} - An array of validation results for each file.
+     */
+    validateMultipleFiles: function(files, options = {}) {
+        return files.map(file => ({
+            file,
+            ...this.validateFile(file, options)
+        }));
     }
 };
 

@@ -19,42 +19,71 @@
         
         <div class="tool-header">
             <h1>Merge Text Files</h1>
-            <p>Combine multiple text files into one. Perfect for merging logs, documents, or data files.</p>
+            <p>Combine multiple text files into one, effortlessly. Supports various text-based formats for seamless integration.</p>
         </div>
         
         <div class="tool-content">
-            <div class="form-group">
-                <label for="textFilesInput" class="form-label">Select Text Files</label>
-                <div class="file-upload" id="fileUploadArea">
-                    <input type="file" id="textFilesInput" multiple accept=".txt, .csv, .log, .md, .json">
-                    <div class="upload-icon">
-                        <i data-lucide="merge"></i>
+            <div class="file-upload-section">
+                <div class="drop-zone" id="dropZone">
+                    <input type="file" id="textFilesInput" multiple accept=".txt,.csv,.log,.md,.json">
+                    <div class="drop-zone-content">
+                        <i data-lucide="upload-cloud" class="upload-icon"></i>
+                        <p class="drop-zone-text">Drag & Drop Your Files Here or <span>Click to Browse</span></p>
+                        <p class="drop-zone-subtext">Supported formats: .txt, .csv, .log, .md, .json</p>
                     </div>
-                    <div class="upload-text">Click to upload or drag and drop</div>
-                    <div class="upload-subtext">.txt, .csv, .log, .md, .json</div>
+                </div>
+                <div id="fileListContainer" class="file-list-container hidden">
+                    <ul id="fileList" class="file-list"></ul>
+                    <button id="clearFilesBtn" class="btn btn-secondary btn-sm">Clear All Files</button>
                 </div>
             </div>
 
-            <div id="fileListContainer" class="hidden">
-                <h3 class="results-title">Selected Files</h3>
-                <ul id="fileList"></ul>
+            <div class="options-section">
+                <h2>Merge Options</h2>
+                <div class="form-group">
+                    <label for="separator" class="form-label">Separator between files:</label>
+                    <select id="separator" class="form-select">
+                        <option value="newline">New Line</option>
+                        <option value="space">Space</option>
+                        <option value="double-newline">Double New Line (Paragraph)</option>
+                        <option value="custom">Custom Separator</option>
+                    </select>
+                    <input type="text" id="customSeparator" class="form-input mt-2 hidden" placeholder="Enter custom separator">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Output Filename:</label>
+                    <input type="text" id="outputFilename" class="form-input" value="merged_text.txt">
+                </div>
             </div>
-
-            <div class="form-group">
-                <button id="mergeBtn" class="btn btn-primary" disabled>Merge Files</button>
+            
+            <div class="action-buttons">
+                <button id="mergeBtn" class="btn btn-primary" disabled>
+                    <i data-lucide="combine"></i>
+                    Merge Files
+                </button>
             </div>
 
             <div id="resultsContainer" class="results-container hidden">
-                <h3 class="results-title">Merged Text</h3>
-                <textarea id="mergedText" class="form-textarea" rows="10" readonly></textarea>
-                <a id="downloadLink" class="btn btn-success hidden" download="merged.txt">Download Merged File</a>
+                <h2 class="results-title">Merged Output</h2>
+                <textarea id="mergedText" class="form-textarea" rows="15" readonly></textarea>
+                <div class="results-actions">
+                    <button id="copyToClipboardBtn" class="btn btn-secondary">
+                        <i data-lucide="copy"></i>
+                        Copy to Clipboard
+                    </button>
+                    <a id="downloadLink" class="btn btn-success" download="merged_text.txt">
+                        <i data-lucide="download"></i>
+                        Download Merged File
+                    </a>
+                </div>
             </div>
         </div>
     </div>
     
-    <script src="merge-text.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/fileValidator.js"></script>
+    <script src="merge-text.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof lucide !== 'undefined') {
@@ -62,7 +91,6 @@
             }
         });
     </script>
-    <script src="merge-text.js"></script>
 </body>
 </html>
 
