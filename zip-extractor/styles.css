@@ -475,45 +475,52 @@
 
 @media (max-width: 480px) {
     .tool-header h1 {
-        font-size: 2rem;
+        font-size: 1.6rem; /* Smaller heading for very small screens */
     }
 
     .tool-header p {
-        font-size: 0.9rem;
+        font-size: 0.8rem; /* Smaller paragraph for very small screens */
     }
 
     .back-link {
-        margin-bottom: 1rem;
-        font-size: 0.8rem;
-        padding: 0.3rem 0.6rem;
+        margin-bottom: 0.5rem; /* Adjusted margin */
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
     }
 
     .tool-content {
-        padding: 1rem;
+        padding: 0.5rem; /* Further reduced padding for tool content */
+    }
+
+    .form-group {
+        margin-bottom: 1rem; /* Adjusted margin for form groups */
     }
 
     .file-upload {
-        padding: 1rem; /* Adjusted for smaller mobile screens */
-        min-height: 150px; /* Ensure sufficient height */
-        display: flex; /* Use flexbox for internal alignment */
+        padding: 0.75rem; /* Aggressively reduced for smallest mobile screens */
+        min-height: 100px; /* Further reduced height for very small devices */
+        /* Flexbox properties remain the same for centering */
+        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
 
     .upload-icon {
-        width: 2rem; /* Smaller icon for small screens */
-        height: 2rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .upload-text {
-        font-size: 0.85rem; /* Smaller font for main text */
+        width: 1.5rem; /* Even smaller icon for very small screens */
+        height: 1.5rem;
         margin-bottom: 0.25rem;
     }
 
+    .upload-text {
+        font-size: 0.75rem; /* Even smaller font for main text */
+        margin-bottom: 0.15rem;
+        word-break: break-word; /* Ensure text wraps */
+    }
+
     .upload-subtext {
-        font-size: 0.7rem; /* Smaller font for subtext */
+        font-size: 0.6rem; /* Even smaller font for subtext */
+        word-break: break-word; /* Ensure text wraps */
     }
 
     .results-container {
