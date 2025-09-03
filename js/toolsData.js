@@ -82,15 +82,6 @@ const allTools = [
         searchKeywords: 'text to pdf convert'
     },
     {
-        id: 'markdown-previewer',
-        title: 'Markdown Previewer',
-        description: 'Preview Markdown as HTML in real-time',
-        icon: 'markdown',
-        href: 'markdown-preview/index.html',
-        category: 'Text',
-        searchKeywords: 'markdown html preview'
-    },
-    {
         id: 'audio-trimmer',
         title: 'Audio Trimmer',
         description: 'Trim audio files to desired length',
