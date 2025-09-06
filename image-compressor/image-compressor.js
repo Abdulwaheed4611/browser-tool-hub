@@ -54,11 +54,61 @@ class AdvancedImageCompressor {
     }
 
     bindEvents() {
-        // File upload events
-        this.ui.fileUpload.addEventListener('click', () => this.ui.fileInput.click());
-        this.ui.fileInput.addEventListener('change', (e) => this.handleFileSelect(e.target.files));
+        // Initialize upload area interactions
+        this.initializeUploadArea();
+
+        // Compression settings events
+        this.ui.qualitySlider.addEventListener('input', this.updateQualityDisplay.bind(this));
+        this.ui.qualitySlider.addEventListener('change', this.compressImage.bind(this));
+        this.ui.downloadBtn.addEventListener('click', this.downloadCompressedImage.bind(this));
+        this.ui.resetBtn.addEventListener('click', this.resetTool.bind(this));
+
+        // Format and resize events
+        if (this.ui.resizeWidth) this.ui.resizeWidth.addEventListener('input', this.compressImage.bind(this));
+        if (this.ui.resizeHeight) this.ui.resizeHeight.addEventListener('input', this.compressImage.bind(this));
+        if (this.ui.formatSelect) this.ui.formatSelect.addEventListener('change', this.compressImage.bind(this));
+    }
+
+    initializeUploadArea() {
+        const dropContent = document.getElementById('dropContent');
+        let fileDialogActive = false;
+        let lastDialogTime = 0;
+
+        // Handle click on drop zone
+        dropContent.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const currentTime = Date.now();
+            
+            // Prevent rapid consecutive clicks
+            if (currentTime - lastDialogTime < 1000) {
+                return;
+            }
+
+            if (!fileDialogActive) {
+                fileDialogActive = true;
+                lastDialogTime = currentTime;
+                
+                this.ui.fileInput.click();
+                
+                // Reset the dialog state after a delay
+                setTimeout(() => {
+                    fileDialogActive = false;
+                }, 1000);
+            }
+        });
+
+        // Handle file selection
+        this.ui.fileInput.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files.length > 0) {
+                this.handleFileSelect(e.target.files);
+                // Reset file input
+                e.target.value = '';
+            }
+        });
+
+        // Handle drag and drop
         this.ui.fileUpload.addEventListener('dragover', this.handleDragOver.bind(this));
-        this.ui.fileUpload.addEventListener('dragleave', this.handleDragLeave.bind(this)); // Add dragleave event
+        this.ui.fileUpload.addEventListener('dragleave', this.handleDragLeave.bind(this));
         this.ui.fileUpload.addEventListener('drop', this.handleDrop.bind(this));
 
         // Compression settings events
